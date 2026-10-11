@@ -10,6 +10,9 @@ import com.example.AITestMoodul.persistence.JokeType;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.ai.chat.model.ChatModel;
+import org.springframework.ai.google.genai.GoogleGenAiChatOptions;
+import org.springframework.ai.google.genai.common.GoogleGenAiThinkingLevel;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -62,11 +65,19 @@ public class JokeService {
     private final GiphyService giphyService;
 
     public JokeService(ChatClient.Builder builder, ChatModel chatModel, JokeRepository jokeRepository,
-                       GiphyService giphyService) {
+                       GiphyService giphyService,
+                       @Value("${insultbot.thinking-level:MEDIUM}") GoogleGenAiThinkingLevel thinkingLevel,
+                       @Value("${insultbot.top-p:0.97}") Double topP,
+                       @Value("${insultbot.temperature:1.0}") Double temperature) {
         ChatClient judge = ChatClient.create(chatModel);
 
+        // Thinking level, topP ja temperature ainult boti jaoks - kohtunikud (judge) jäävad mudeli vaikeväärtustele
         this.chat = builder
                 .defaultSystem(SYSTEM_PROMPT)
+                .defaultOptions(GoogleGenAiChatOptions.builder()
+                        .thinkingLevel(thinkingLevel)
+                        .topP(topP)
+                        .temperature(temperature))
                 .defaultAdvisors(
                         new SimpleLoggerAdvisor(),
                         new RegexJailbreakAdvisor(),
