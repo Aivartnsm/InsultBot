@@ -32,3 +32,8 @@ export function sendMessage(message) {
 export function fetchJokes() {
   return request('/api/jokes')
 }
+
+// Tagastab null, kui backend jõusaali ei leidnud (204 No Content)
+export function fetchRandomGym() {
+  return request('/api/gyms/random')
+}

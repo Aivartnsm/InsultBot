@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
 @Slf4j
 public class RegexJailbreakAdvisor implements CallAdvisor {
 
-  private static final int MAX_MESSAGE_LENGTH = 1_000;
+  private static final int MAX_MESSAGE_LENGTH = 255;
 
   // Lihtsad jailbreak-katsed ("ignore your instructions", "you are now ...", "DAN mode") lastakse
   // meelega läbi - Insultbot roastib neid süsteemiprompti järgi. Kui mudel siiski kuuletub,

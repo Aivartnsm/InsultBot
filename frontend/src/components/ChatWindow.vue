@@ -1,11 +1,22 @@
 <script setup>
 import { nextTick, ref } from 'vue'
-import { ApiError, sendMessage } from '../api'
+import { ApiError, fetchRandomGym, sendMessage } from '../api'
 import { JOKE_TYPE_LABELS } from '../jokeTypes'
 
-const MAX_LENGTH = 1000 // sama piir mis RegexJailbreakAdvisor.MAX_MESSAGE_LENGTH
+const MAX_LENGTH = 255 // sama piir mis RegexJailbreakAdvisor.MAX_MESSAGE_LENGTH
 
 const emit = defineEmits(['joke-saved'])
+
+// Iga 3-6 kasutaja sõnumi järel lisatakse vastusele "Prescription: gym" kaart
+const GYM_EVERY_MIN = 3
+const GYM_EVERY_MAX = 6
+
+function randomGymInterval() {
+  return GYM_EVERY_MIN + Math.floor(Math.random() * (GYM_EVERY_MAX - GYM_EVERY_MIN + 1))
+}
+
+let promptsSinceGym = 0
+let nextGymAt = randomGymInterval()
 
 const suggestions = ['Roast my code', 'Tell me a dark joke', 'I use tabs instead of spaces']
 
@@ -56,14 +67,31 @@ async function send(text = input.value) {
   loading.value = true
   scrollToBottom()
 
+  promptsSinceGym++
+
   try {
     const joke = await sendMessage(message)
-    addMessage({ from: 'bot', type: joke.type, text: joke.joke, gifUrl: joke.gifUrl })
+    const gym = await gymPrescription(joke.type)
+    addMessage({ from: 'bot', type: joke.type, text: joke.joke, gifUrl: joke.gifUrl, gym })
     emit('joke-saved', joke)
   } catch (error) {
     addMessage({ from: 'system', text: errorText(error) })
   } finally {
     loading.value = false
+  }
+}
+
+// SUPPORT vastusele (päris mures kasutaja) jõusaali ei soovitata - kaart lükkub järgmisele vastusele
+async function gymPrescription(type) {
+  if (type === 'SUPPORT' || promptsSinceGym < nextGymAt) return null
+  try {
+    const gym = await fetchRandomGym()
+    if (!gym) return null
+    promptsSinceGym = 0
+    nextGymAt = randomGymInterval()
+    return gym
+  } catch {
+    return null // jõusaal on boonus, nali näidatakse ka ilma selleta
   }
 }
 
@@ -118,6 +146,17 @@ function onKeydown(event) {
               alt="Personal Advisor's reaction GIF"
               @load="scrollToBottom"
             />
+            <a
+              v-if="message.gym"
+              :href="message.gym.mapsUrl"
+              class="gym-card"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span class="gym-label">🏋️ Prescription: gym</span>
+              <strong>{{ message.gym.name }}</strong>
+              <span v-if="message.gym.address" class="gym-address">{{ message.gym.address }}</span>
+            </a>
           </div>
 
           <div v-if="loading" class="message bot typing" aria-label="Personal Advisor is typing">
@@ -350,6 +389,36 @@ button:disabled {
   border-radius: 10px;
   object-fit: cover;
   background: var(--bg);
+}
+
+.gym-card {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 10px;
+  padding: 10px 14px;
+  background: var(--bg);
+  border: 1px dashed var(--accent);
+  border-radius: 10px;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.gym-card:hover {
+  border-style: solid;
+}
+
+.gym-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.gym-address {
+  font-size: 0.85rem;
+  color: var(--muted);
 }
 
 .chat-footer {
