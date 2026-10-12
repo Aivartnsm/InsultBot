@@ -1,4 +1,4 @@
-package com.example.AITestMoodul.advisors;
+package com.example.AITestMoodul.exception;
 
 import lombok.Getter;
 

@@ -52,6 +52,9 @@ function errorText(error) {
     }
     return `Nice try. The bouncer threw that message out (${rule}).`
   }
+  if (error instanceof ApiError && error.status === 429) {
+    return "Slow down, you're out of breath. Do a set of squats and try again in a minute."
+  }
   if (error instanceof ApiError && error.status === 400) {
     return "I can't roast nothing. Type something first."
   }

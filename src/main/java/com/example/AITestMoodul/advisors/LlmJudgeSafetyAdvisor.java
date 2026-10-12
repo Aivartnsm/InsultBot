@@ -1,5 +1,6 @@
 package com.example.AITestMoodul.advisors;
 
+import com.example.AITestMoodul.exception.GuardrailViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.ChatClientRequest;
