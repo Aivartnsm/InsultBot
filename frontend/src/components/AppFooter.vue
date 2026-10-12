@@ -5,7 +5,7 @@
         Feeling down for real? You're not alone - call <strong>116 123</strong>,
         or <strong>112</strong> in an emergency.
       </p>
-      <p class="credits">Insultbot · a school project built with Spring Boot, Spring AI &amp; Vue</p>
+      <p class="credits">Personal Advisor · a school project built with Spring Boot, Spring AI &amp; Vue</p>
     </div>
   </footer>
 </template>

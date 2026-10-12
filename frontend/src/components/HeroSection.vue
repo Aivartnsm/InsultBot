@@ -1,7 +1,7 @@
 <script setup>
 const steps = [
   { title: 'Say something', text: 'Tell it about your code, your hobbies or your life choices.' },
-  { title: 'Get roasted', text: 'A grumpy AI comedian answers with an insult or a dark joke.' },
+  { title: 'Get roasted', text: 'A grumpy, gym-obsessed AI comedian answers with an insult or a dark joke - and prescribes more squats.' },
   { title: 'Earn your shame', text: 'Every roast lands in the Hall of Shame for everyone to see.' }
 ]
 </script>
@@ -12,9 +12,9 @@ const steps = [
     <div class="container hero-inner">
       <div class="hero-text">
         <p class="eyebrow">Live on stage · Tonight only · Every night</p>
-        <h1>Get roasted by a <span class="accent">grumpy</span> AI comedian.</h1>
+        <h1>Get roasted by a <span class="accent">grumpy</span> gym-junkie AI comedian.</h1>
         <p class="lead">
-          Insultbot has a dark sense of humour and zero patience. It roasts what you
+          Personal Advisor has a dark sense of humour, zero patience and one answer to every problem: more bench presses and squats. It roasts what you
           <em>say</em> and <em>do</em> - never who you <em>are</em>.
         </p>
         <div class="actions">

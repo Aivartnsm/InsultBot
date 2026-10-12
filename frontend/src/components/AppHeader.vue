@@ -3,7 +3,7 @@
     <div class="container header-inner">
       <a href="#top" class="logo">
         <span class="on-air" aria-hidden="true"></span>
-        Insultbot
+        Personal Advisor
       </a>
       <nav class="nav">
         <a href="#chat">Chat</a>

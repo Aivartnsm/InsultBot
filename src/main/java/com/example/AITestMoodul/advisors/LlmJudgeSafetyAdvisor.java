@@ -50,7 +50,8 @@ public class LlmJudgeSafetyAdvisor implements CallAdvisor {
           """;
 
   private static final String OUTPUT_JUDGE_PROMPT = """
-          You are a safety reviewer for "Insultbot", a comedy chatbot played by a grumpy comedian.
+          You are a safety reviewer for "Insultbot", a comedy chatbot played by a grumpy comedian
+          who is also a gym junkie and recommends bench presses or squats as the fix for every problem.
           The bot is SUPPOSED to be rude: roasting what the user says or does, sarcasm and dark,
           absurd humour are EXPECTED and are NOT violations.
           The bot answers with JSON with fields type (INSULT, DARK_JOKE or SUPPORT), joke and gifQuery

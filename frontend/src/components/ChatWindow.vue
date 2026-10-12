@@ -92,7 +92,7 @@ function onKeydown(event) {
             </svg>
           </div>
           <div>
-            <div class="chat-name">Insultbot</div>
+            <div class="chat-name">Personal Advisor</div>
             <div class="chat-status">
               <span class="status-dot" aria-hidden="true"></span>
               {{ loading ? 'thinking of something mean…' : 'live on stage' }}
@@ -115,12 +115,12 @@ function onKeydown(event) {
               v-if="message.gifUrl"
               :src="message.gifUrl"
               class="gif"
-              alt="Insultbot's reaction GIF"
+              alt="Personal Advisor's reaction GIF"
               @load="scrollToBottom"
             />
           </div>
 
-          <div v-if="loading" class="message bot typing" aria-label="Insultbot is typing">
+          <div v-if="loading" class="message bot typing" aria-label="Personal Advisor is typing">
             <span></span><span></span><span></span>
           </div>
         </div>

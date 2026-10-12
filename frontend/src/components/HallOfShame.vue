@@ -67,7 +67,7 @@ defineExpose({ load })
             </div>
             <p class="victim">“{{ joke.userInput }}”</p>
             <p class="roast">{{ joke.joke }}</p>
-            <img v-if="joke.gifUrl" :src="joke.gifUrl" class="gif" alt="Insultbot's reaction GIF" loading="lazy" />
+            <img v-if="joke.gifUrl" :src="joke.gifUrl" class="gif" alt="Personal Advisor's reaction GIF" loading="lazy" />
           </li>
         </ul>
         <p class="giphy">GIFs powered by GIPHY</p>
